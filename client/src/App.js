@@ -17,6 +17,8 @@ import { AuthProvider, useAuth } from "./hooks/useAuth";
 import Navbar from "./components/navbar";
 import ManualItemEntry from "./pages/manualEntry";
 import Profile from "./pages/profile";
+import Notifications from "./pages/Notifications";
+import Camera from "./pages/camera";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -59,6 +61,23 @@ function App() {
                 <ManualItemEntry />
                 <Navbar />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+                <Navbar />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/camera-capture"
+            element={
+              <div>
+                <Camera />
+              </div>
             }
           />
         </Routes>

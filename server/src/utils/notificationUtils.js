@@ -1,7 +1,7 @@
 const webpush = require("web-push");
 require("dotenv").config();
 
-webpush.setGCMAPIKey("AIzaSyD2D4y4pmMbPvdmwb3D5BepChwNHikRO8M");
+webpush.setGCMAPIKey(process.env.GCMAPI_KEY);
 webpush.setVapidDetails(
   "https://www.foodexp.com",
   process.env.VAPID_PUBLIC,
