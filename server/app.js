@@ -102,7 +102,6 @@ app.get("/notifications", protect, async (req, res) => {
 
   // Today's date
   const today = new Date();
-
   // Tomorrow's date
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
