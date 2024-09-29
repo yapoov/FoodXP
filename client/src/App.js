@@ -17,6 +17,7 @@ import { AuthProvider, useAuth } from "./hooks/useAuth";
 import Navbar from "./components/navbar";
 import ManualItemEntry from "./pages/manualEntry";
 import Profile from "./pages/profile";
+import Notifications from "./pages/Notifications";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -57,6 +58,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <ManualItemEntry />
+                <Navbar />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
                 <Navbar />
               </ProtectedRoute>
             }

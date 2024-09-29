@@ -89,6 +89,31 @@ app.delete("/items/:name", protect, async (req, res) => {
   }
 });
 
+app.get("/notifications", protect, async (req, res) => {
+  const data = {
+    expired: [],
+    expiringSoon: []
+  };
+
+  // Today's date
+  const today = new Date();
+  
+  // Tomorrow's date
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  data.expired = req.user.items.filter(item => {
+    const expiryDate = new Date(item.expiryDate); // Convert string to Date object
+    return expiryDate < today;
+  });
+
+  data.expiringSoon = req.user.items.filter(item => {
+    const expiryDate = new Date(item.expiryDate); // Convert string to Date object
+    return expiryDate >= today && expiryDate < tomorrow;
+  });
+
+  res.json({ message: "Notifications retrieved successfully", data });
+});
 const PORT = process.env.PORT || 3145;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
