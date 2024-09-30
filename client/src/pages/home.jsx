@@ -35,6 +35,7 @@ function Home() {
   useEffect(() => {
     fetchItems();
   }, [expiryDate]);
+  
   return (
     <div className="w-full">
       <Header title={"Items"} />

@@ -36,6 +36,30 @@ function FoodCard({ item, onClickDelete }) {
     removeText = "consume";
     bgColor = "bg-teal-300";
   }
+
+  // Usage recommendation state
+  const [usageRecommendation, setUsageRecommendation] = useState("");
+
+  // Calculate the usage recommendation based on the expiration date
+  const calculateUsageRecommendation = () => {
+    if (daysDifference < 0) {
+      setUsageRecommendation("Discard the expired item");
+    } else if (daysDifference === 0) {
+      setUsageRecommendation("Use the item today!");
+    } else if (daysDifference <= 3) {
+      setUsageRecommendation("Use the item soon!");
+    } else if (daysDifference <= 7) {
+      setUsageRecommendation("Plan to use the item within the next few days");
+    } else {
+        setUsageRecommendation("");
+    }
+  };
+
+  // Call the calculateUsageRecommendation function when the component mounts
+  React.useEffect(() => {
+    calculateUsageRecommendation();
+  }, [item]);
+
   return (
     <li
       ref={parentRef}
@@ -54,6 +78,7 @@ function FoodCard({ item, onClickDelete }) {
               {item.name}
             </div>
             <p class={`${textColor} font-bold text-lg`}>{expiryMessage}</p>
+            <p class="text-gray-600">{usageRecommendation}</p>
           </div>
         </div>
         {focused && (
