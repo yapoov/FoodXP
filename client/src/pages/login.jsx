@@ -94,7 +94,7 @@ const Login = () => {
         </div>
         <div className="flex justify-between  text-center md:text-left">
           <button
-            className=" flex-grow rounded-full mt-4 p-4 bg-teal-500 hover:bg-teal-600 p-3 text-white uppercase rounded text-xs tracking-wider"
+            className=" flex-grow rounded-full mt-4 p-4 bg-teal-500 hover:bg-teal-600  text-white uppercase  text-xs tracking-wider"
             type="submit"
           >
             Login
@@ -104,7 +104,7 @@ const Login = () => {
           Don&apos;t have an account?{" "}
           <Link
             className=" text-yellow-600 hover:text-yellow-700 hover:underline hover:underline-offset-4"
-            to={"/signup"}
+            to={"/register"}
           >
             Register
           </Link>

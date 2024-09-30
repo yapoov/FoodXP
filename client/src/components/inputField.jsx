@@ -4,7 +4,7 @@ const InputField = ({ type, validate, onChange, placeholder, error }) => {
   return (
     <>
       <input
-        className="rounded-full text-sm w-full p-4 my-2  border border-solid border-gray-300 rounded"
+        className="rounded-full text-sm w-full p-4 my-2  border border-solid border-gray-300 "
         type={type}
         onChange={onChange}
         placeholder={placeholder}

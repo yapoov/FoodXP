@@ -3,6 +3,7 @@ const csv = require("csv-parser");
 const Fuse = require("fuse.js");
 const axios = require("axios");
 let foodData = null;
+let foodExpiryData = null;
 const loadCSVData = (filePath) => {
   return new Promise((resolve, reject) => {
     const results = [];
@@ -20,53 +21,10 @@ const FindProducts = async (textAnnotations) => {
     foodData = await loadCSVData("./src/db/coles_data.csv");
   }
   const res = await FuzzySearch(newRows, foodData);
-  return res;
-};
-
-const openFoodFactsSearch = async (productName) => {
-  try {
-    const response = await axios.get(
-      "https://au.openfoodfacts.org/cgi/search.pl",
-      {
-        params: {
-          search_terms: productName,
-          json: 1, // Set to 1 to get results in JSON format
-        },
-      }
-    );
-
-    // Check if there are any products in the response
-    if (response.data.products && response.data.products.length > 0) {
-      return response.data.products[0]; // Return the first matching product
-    } else {
-      return null; // Return null if no product was found
-    }
-  } catch (error) {
-    console.error(`Error fetching product info for ${productName}:`, error);
-    return null;
+  if (!foodExpiryData) {
+    foodExpiryData = await loadCSVData("./src/db/food_expiry.csv");
   }
-};
-
-const fetchProductInfo = async (ocrProducts) => {
-  const productDetails = [];
-
-  for (const product of ocrProducts) {
-    const productInfo = await openFoodFactsSearch(product);
-    if (productInfo) {
-      productDetails.push({
-        name: product,
-        brand: productInfo.brands || "N/A",
-        ingredients: productInfo.ingredients_text || "N/A",
-        nutrients: productInfo.nutriments || "N/A",
-        packaging: productInfo.packaging || "N/A",
-        link: `https://world.openfoodfacts.org/product/${productInfo.id}`,
-      });
-    } else {
-      console.log(`No product found for: ${product}`);
-    }
-  }
-
-  return productDetails;
+  return AddExpiryData(res, foodExpiryData);
 };
 
 const FuzzySearch = (ocrProducts, csvProducts) => {
@@ -84,7 +42,18 @@ const FuzzySearch = (ocrProducts, csvProducts) => {
 
   return matchedProducts;
 };
+const AddExpiryData = (products, data) => {
+  const fuse = new Fuse(data, {
+    keys: ["name"],
+    threshold: 0.7,
+  });
 
+  return products.map((product) => {
+    const result = fuse.search(product["Product Name"])[0];
+    product.expiryData = result ? result.item : null;
+    return product;
+  });
+};
 function ExtractTextByLines(textAnnotations) {
   const centerVertices = textAnnotations[0].boundingPoly.vertices;
 

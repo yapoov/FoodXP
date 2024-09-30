@@ -4,7 +4,7 @@ const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   expiryDate: {
     type: Date,
@@ -14,12 +14,17 @@ const itemSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  imgUrl: {
+    type: String,
+    default: "",
+  },
   quantity: {
     type: Number,
     default: 1,
   },
   description: {
     type: String,
+    default: "",
   },
 });
 
@@ -27,6 +32,6 @@ itemSchema.virtual("expired").get(function () {
   return this.expiryDate < Date.now();
 });
 
-const Item = mongoose.model('Item', itemSchema);
+const Item = mongoose.model("Item", itemSchema);
 
 module.exports = Item;

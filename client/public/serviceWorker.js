@@ -5,7 +5,7 @@ self.addEventListener("push", (e) => {
   console.log("Push Recieved...");
   self.registration.showNotification(data.title, {
     body: data.body,
-    icon: data.icon,
+    icon: data.icon ? data.icon : "/foodxp_logo.png",
     vibrate: [200, 100, 200, 100, 200, 100, 200],
   });
 });

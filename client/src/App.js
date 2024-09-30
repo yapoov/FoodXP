@@ -1,15 +1,8 @@
-// import logo from "./logo.svg";
 import "./App.css";
 import "./output.css";
-import { SetupNotification } from "./notification";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 
 import { Navigate } from "react-router-dom";
@@ -19,6 +12,7 @@ import ManualItemEntry from "./pages/manualEntry";
 import Profile from "./pages/profile";
 import Notifications from "./pages/Notifications";
 import Camera from "./pages/camera";
+import { ToastContainer } from "react-toastify";
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -28,9 +22,29 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+const MobileWidth = ({ children }) => {
+  return (
+    <div className="  lg:justify-center lg:flex ">
+      <div className="sm:w-full xl:max-w-xl">{children}</div>
+    </div>
+  );
+};
+
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -40,8 +54,10 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <Home />
-                <Navbar />
+                <MobileWidth>
+                  <Home />
+                  <Navbar />
+                </MobileWidth>
               </ProtectedRoute>
             }
           />
@@ -49,8 +65,10 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute>
-                <Profile />
-                <Navbar />
+                <MobileWidth>
+                  <Profile />
+                  <Navbar />
+                </MobileWidth>
               </ProtectedRoute>
             }
           />
@@ -58,8 +76,10 @@ function App() {
             path="/manual-entry"
             element={
               <ProtectedRoute>
-                <ManualItemEntry />
-                <Navbar />
+                <MobileWidth>
+                  <ManualItemEntry />
+                  <Navbar />
+                </MobileWidth>
               </ProtectedRoute>
             }
           />
@@ -67,17 +87,19 @@ function App() {
             path="/notifications"
             element={
               <ProtectedRoute>
-                <Notifications />
-                <Navbar />
+                <MobileWidth>
+                  <Notifications />
+                  <Navbar />
+                </MobileWidth>
               </ProtectedRoute>
             }
           />
           <Route
             path="/camera-capture"
             element={
-              <div>
+              <MobileWidth>
                 <Camera />
-              </div>
+              </MobileWidth>
             }
           />
         </Routes>
