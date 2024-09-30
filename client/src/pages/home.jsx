@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import FoodCard from "../components/foodCard";
 import Header from "../components/header";
 import api from "../api";
+import EditItem from "../components/editItem";
 
 function Home() {
   const [items, setItems] = useState([]);
@@ -13,6 +15,23 @@ function Home() {
       setItems(
         items.filter(function (e) {
           return e !== item;
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleEdit = async (item) => {
+    try {
+      const res = await api.put(`/items/${item._id}`, item);
+      const updatedItem = res.data.data;
+      setItems(
+        items.map((e) => {
+          if (e._id === updatedItem._id) {
+            return updatedItem;
+          }
+          return e;
         })
       );
     } catch (e) {
@@ -51,7 +70,7 @@ function Home() {
         {items.length > 0 ? (
           items.map((item) => (
             <div className="mt-2">
-              <FoodCard item={item} onClickDelete={handleDelete} />
+              <FoodCard item={item} onClickDelete={handleDelete} onEdit={handleEdit}/>
             </div>
           ))
         ) : (
@@ -59,6 +78,9 @@ function Home() {
             No items
           </div>
         )}
+        <Routes>
+          <Route path="/edit/:id" element={<EditItem />} />
+        </Routes>
       </div>
     </div>
   );

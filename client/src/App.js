@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
+import EditItem from "./components/editItem";
 
 import { Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
@@ -102,6 +103,7 @@ function App() {
               </MobileWidth>
             }
           />
+          <Route path="/edit/:id" element={<EditItem />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

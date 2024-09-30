@@ -1,14 +1,22 @@
 import React, { useRef } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function FoodCard({ item, onClickDelete }) {
+function FoodCard({ item, onClickDelete, onEdit }) {
   const [focused, setFocused] = useState(false);
   const parentRef = useRef(null);
+  const navigate = useNavigate();
+
   const onBlur = (event) => {
     if (parentRef.current && !parentRef.current.contains(event.relatedTarget)) {
       setFocused(false);
     }
   };
+
+  const handleEdit = () => {
+    navigate(`/edit/${item._id}`);
+  };
+
   const currentDate = new Date();
   // Get the expiry date from the item and convert it to a Date object
   const expiryDate = new Date(item.expiryDate);
@@ -96,12 +104,20 @@ function FoodCard({ item, onClickDelete }) {
           </div>
         </div>
         {focused && (
-          <button
-            onClick={(e) => onClickDelete(item)}
-            className={`h-full border-l-4  border-gray-500 p-2 ${bgColor} bg-red-300 hover:bg-red-100 font-bold`}
-          >
-            {removeText}
-          </button>
+          <>
+            <button
+              onClick={(e) => onClickDelete(item)}
+              className={`h-full border-l-4  border-gray-500 p-2 ${bgColor} bg-red-300 hover:bg-red-100 font-bold`}
+            >
+              {removeText}
+            </button>
+            <button
+              onClick={handleEdit}
+              className={`h-full border-l-4  border-gray-500 p-2 bg-blue-300 hover:bg-blue-100 font-bold`}
+            >
+              Edit
+            </button>
+          </>
         )}
       </div>
     </li>
