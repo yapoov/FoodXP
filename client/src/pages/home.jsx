@@ -19,6 +19,7 @@ function Home() {
       console.log(e);
     }
   };
+
   const fetchItems = async () => {
     try {
       const res = await api.get("/items", {
@@ -30,6 +31,7 @@ function Home() {
       setItems(sorted);
     } catch (e) {}
   };
+
   useEffect(() => {
     fetchItems();
   }, [expiryDate]);
