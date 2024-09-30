@@ -20,12 +20,14 @@ function Home() {
       console.log(e);
     }
   };
+
   const fetchItems = async () => {
     try {
       const res = await api.get("/items", { params: { filterDate: expiryDate } });
       setItems(res.data.data);
     } catch (e) {}
   };
+
   useEffect(() => {
     fetchItems();
   }, [expiryDate]);
@@ -42,6 +44,7 @@ function Home() {
             onChange={(e) => setExpiryDate(e.target.value)}
           ></input>
         </div>
+        
         {items.map((item) => (
           <div className="mt-2">
             <FoodCard item={item} onClickDelete={handleDelete} />
@@ -51,5 +54,6 @@ function Home() {
     </>
   );
 }
+
 
 export default Home;
