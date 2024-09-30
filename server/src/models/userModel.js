@@ -8,12 +8,21 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
   password: {
     type: String,
     required: true,
   },
   subscription: {
     type: Object,
+  },
+  notifications: {
+    type: Array,
   },
   // Define the items array
   items: [

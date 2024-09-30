@@ -7,11 +7,17 @@ import { useAuth } from "../hooks/useAuth";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [serverError, setServerError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const [firstnameError, setFirstnameError] = useState("");
+  const [lastnameError, setLastnameError] = useState("");
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
@@ -23,10 +29,12 @@ const Signup = () => {
     setEmailError("");
     setPasswordError("");
     setConfirmPasswordError("");
+    setFirstnameError("");
+    setLastnameError("");
 
     let valid = true;
 
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !firstname || !lastname) {
       setServerError("Please fill all fields.");
       valid = false;
     }
@@ -39,6 +47,16 @@ const Signup = () => {
     }
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match.");
+      valid = false;
+    }
+
+    if (!/^[A-Za-z]+$/.test(firstname)) {
+      setFirstnameError("First name must only contain letters");
+      valid = false;
+    }
+
+    if (!/^[A-Za-z]+$/.test(lastname)) {
+      setLastnameError("Last name must only contain letters");
       valid = false;
     }
 
@@ -81,6 +99,18 @@ const Signup = () => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email address"
           error={emailError}
+        />
+        <InputField
+          type="text"
+          onChange={(e) => setFirstname(e.target.value)}
+          placeholder="First Name"
+          error={firstnameError}
+        />
+        <InputField
+          type="text"
+          onChange={(e) => setLastname(e.target.value)}
+          placeholder="Last Name"
+          error={lastnameError}
         />
         <InputField
           type="password"

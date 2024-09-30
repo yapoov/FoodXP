@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const authRoutes = require("./src/routes/authRoutes");
 const itemRoutes = require("./src/routes/itemRoutes");
 const notificationRoutes = require("./src/routes/notificationRoutes");
+const userRoutes = require("./src/routes/userRoutes");
 const { protect } = require("./src/controllers/authController");
 const FindProducts = require("./src/utils/ocrUtils");
 
@@ -30,6 +31,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use("/auth", authRoutes);
 app.use("/items", protect, itemRoutes);
 app.use("/notifications", protect, notificationRoutes);
+app.use("/user", protect, userRoutes);
 
 // OCR Endpoint for Image Upload
 app.post("/upload-image", async (req, res) => {

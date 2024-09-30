@@ -47,7 +47,7 @@ function Navbar() {
 
         <Link
           to={"/profile"}
-          class="inline-flex flex-col items-center justify-center px-5 hover:bg-teal-500 group"
+          class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-teal-500 group"
         >
           <svg
             class="w-8 h-8 mb-1 text-gray-500 group-hover:text-gray-200"
