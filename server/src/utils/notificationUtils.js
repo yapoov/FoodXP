@@ -10,6 +10,7 @@ webpush.setVapidDetails(
 );
 
 const sendNotification = (subscription, payload) => {
+  if (!subscription) return;
   return webpush
     .sendNotification(subscription, JSON.stringify(payload))
     .then((res) => console.log("Notification sent", res))

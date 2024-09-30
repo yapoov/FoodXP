@@ -38,7 +38,7 @@ exports.subscribe = async (req, res) => {
 };
 
 exports.unsubscribe = async (req, res) => {
-  req.user.subscription = "";
+  req.user.subscription = null;
   await req.user.save();
 
   res.status(201).json({ message: "Subscription disabled" });

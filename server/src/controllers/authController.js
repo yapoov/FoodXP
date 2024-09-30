@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 require("dotenv").config();
 
 const register = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, firstName, lastName } = req.body;
 
   try {
     // Check if user already exists
@@ -13,7 +13,7 @@ const register = async (req, res) => {
     }
 
     // Create new user
-    const newUser = new User({ username, password });
+    const newUser = new User({ username, password, firstName, lastName });
     await newUser.save();
 
     const token = GenerateToken(newUser);

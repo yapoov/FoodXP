@@ -7,8 +7,8 @@ import { useAuth } from "../hooks/useAuth";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [serverError, setServerError] = useState("");
@@ -34,7 +34,7 @@ const Signup = () => {
 
     let valid = true;
 
-    if (!email || !password || !confirmPassword || !firstname || !lastname) {
+    if (!email || !password || !confirmPassword || !firstName || !lastName) {
       setServerError("Please fill all fields.");
       valid = false;
     }
@@ -50,12 +50,12 @@ const Signup = () => {
       valid = false;
     }
 
-    if (!/^[A-Za-z]+$/.test(firstname)) {
+    if (!/^[A-Za-z]+$/.test(firstName)) {
       setFirstnameError("First name must only contain letters");
       valid = false;
     }
 
-    if (!/^[A-Za-z]+$/.test(lastname)) {
+    if (!/^[A-Za-z]+$/.test(lastName)) {
       setLastnameError("Last name must only contain letters");
       valid = false;
     }
@@ -67,7 +67,12 @@ const Signup = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({
+          username: email,
+          password,
+          firstName,
+          lastName,
+        }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -95,12 +100,6 @@ const Signup = () => {
       {serverError && <p className="text-red-500 py-2">{serverError}</p>}
       <form className="md:w-1/3 max-w-sm" onSubmit={handleSubmit}>
         <InputField
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email address"
-          error={emailError}
-        />
-        <InputField
           type="text"
           onChange={(e) => setFirstname(e.target.value)}
           placeholder="First Name"
@@ -111,6 +110,12 @@ const Signup = () => {
           onChange={(e) => setLastname(e.target.value)}
           placeholder="Last Name"
           error={lastnameError}
+        />
+        <InputField
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email address"
+          error={emailError}
         />
         <InputField
           type="password"

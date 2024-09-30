@@ -5,8 +5,8 @@ function Toggle({ checked, onChange }) {
     <>
       <label class="inline-flex items-center cursor-pointer scale-150">
         <input
-          checked={checked}
           onChange={onChange}
+          checked={checked}
           type="checkbox"
           value=""
           class="sr-only peer"
